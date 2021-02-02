@@ -6,8 +6,8 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 const signInToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+  return jwt.sign({ id }, "secrettest1234", {
+    expiresIn: "90d",
   });
 };
 
@@ -16,7 +16,7 @@ const createSendToken = (user, statusCode, req, res) => {
 
   res.cookie('jwt', token, {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN + 24 * 60 * 60 * 1000
+      Date.now() + 90 + 24 * 60 * 60 * 1000
     ),
 
     httpOnly: true,
@@ -112,7 +112,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // Varification tokens  using promisify ie inbuilt promise returning of node js
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, "secrettest1234");
   // console.log(decoded);
   //check if user still exists by checking the id still exists or not
 
@@ -148,7 +148,7 @@ exports.isLoggedIn = async (req, res, next) => {
       // 1) verify token
       const decoded = await promisify(jwt.verify)(
         req.cookies.jwt,
-        process.env.JWT_SECRET
+        "secrettest1234"
       );
 
       // 2) Check if user still exists

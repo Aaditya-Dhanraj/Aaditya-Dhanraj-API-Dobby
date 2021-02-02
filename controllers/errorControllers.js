@@ -87,9 +87,9 @@ const sendErrorProd = (err, req, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
-  if (process.env.NODE_ENV === 'development') {
+  if (true) {
     sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (false) {
     let error = { name: err.name, message: err.message };
     error = Object.assign(error, err);
     // let error = { ...err };
